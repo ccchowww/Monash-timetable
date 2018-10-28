@@ -17,9 +17,11 @@ class App extends Component {
     }
 
     openNotification = () => {
-        if ("Notification" in window && Notification.permission === "granted") {
-            const notification = new Notification("NOTIFIED BITCH");
-        }
+        if (Notification.permission == 'granted') {
+            navigator.serviceWorker.getRegistration().then(function(reg) {
+              reg.showNotification('Hello world!');
+            });
+          }
     }
 
 
