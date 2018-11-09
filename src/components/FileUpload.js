@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { toJson } from '../utilityFunctions/rawTimetableToJson';
+import WeekView from './weekView';
 
 
 class FileUpload extends Component {
@@ -80,13 +81,16 @@ class FileUpload extends Component {
         )
         return (
             <div>
+                <WeekView ttData={this.state.jsonTimetable}/>
                 <input
                     type="file"
                     onChange={this.onUpload}
                 />
-                <ul>
-                    {uploadedText}
-                </ul>
+                {
+                 //<ul>
+                 //   {uploadedText}
+                 //</ul>
+                }
                 <input
                     type="button"
                     value="Show Timetable"
