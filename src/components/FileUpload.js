@@ -56,29 +56,29 @@ class FileUpload extends Component {
     }
 
     render() {
-        const uploadedText = this.state.jsonTimetable.map(
-            ({ unitName, timeStart, duration, classroomCode, classroomType, dateArray }) => {
-                let dateRangeSpacer = " and ";
-                let formattedDateRanges = "";
-                let dateRangeFormatter = (dateRangeArray) => {
-                    for (let i = 0; i < dateRangeArray.length; i++) {
-                        if (dateRangeArray[i + 1] === undefined) {
-                            formattedDateRanges += dateRangeArray[i];
-                        } else {
-                            formattedDateRanges += dateRangeArray[i];
-                            formattedDateRanges += dateRangeSpacer;
-                        }
-                    }
-                }
-                dateRangeFormatter(dateArray);
-                return (
-                    <li>
-                        {unitName + ",," + timeStart + ",," + duration + ",," + classroomCode + ",,"
-                        + classroomType + ",," + formattedDateRanges}
-                    </li>
-                );
-            }
-        )
+        // const uploadedText = this.state.jsonTimetable.map(
+        //     ({ unitName, timeStart, duration, classroomCode, classroomType, dateArray }) => {
+        //         let dateRangeSpacer = " and ";
+        //         let formattedDateRanges = "";
+        //         let dateRangeFormatter = (dateRangeArray) => {
+        //             for (let i = 0; i < dateRangeArray.length; i++) {
+        //                 if (dateRangeArray[i + 1] === undefined) {
+        //                     formattedDateRanges += dateRangeArray[i];
+        //                 } else {
+        //                     formattedDateRanges += dateRangeArray[i];
+        //                     formattedDateRanges += dateRangeSpacer;
+        //                 }
+        //             }
+        //         }
+        //         dateRangeFormatter(dateArray);
+        //         return (
+        //             <li>
+        //                 {unitName + ",," + timeStart + ",," + duration + ",," + classroomCode + ",,"
+        //                 + classroomType + ",," + formattedDateRanges}
+        //             </li>
+        //         );
+        //     }
+        // )
 
         // destructuring
         const { unitName, dateArray } = this.state.jsonTimetable;
