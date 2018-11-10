@@ -7,7 +7,8 @@ class FileUpload extends Component {
     state = {
         isLoading: true,
         uploadedFileText: "",
-        jsonTimetable: []
+        jsonTimetable: [],
+        canInstall: false
     }
 
     // When user selects file, verify, read, and set state its content
@@ -53,6 +54,36 @@ class FileUpload extends Component {
 
     componentWillUpdate(nextProps, nextState) {
         localStorage.setItem("jsonTimetable", JSON.stringify(nextState.jsonTimetable));
+    }
+
+    componentDidMount() {
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent Chrome 67 and earlier from automatically showing the prompt
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            let deferredPrompt = e;
+
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice
+                .then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the A2HS prompt');
+                    } else {
+                    console.log('User dismissed the A2HS prompt');
+                    }
+                    deferredPrompt = null;
+            });
+        });
+
+        window.addEventListener('appinstalled', (evt) => {
+            alert('a2hs installed');
+        });
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('beforeinstallprompt');
+        window.removeEventListener('appinstalled');
     }
 
     render() {
@@ -106,6 +137,9 @@ class FileUpload extends Component {
                     value="Clear localStorage"
                     onClick={this.clearLocalStorage}
                 />
+                <span>
+                    
+                </span>
             </div>
         );
     }
