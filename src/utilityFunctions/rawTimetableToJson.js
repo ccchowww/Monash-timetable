@@ -54,10 +54,12 @@ export const toJson = (rawText) => {
             classroomType: classesArray[i][7][1].toLowerCase(),
             classroomCode: classesArray[i][7][2],
             campus: classesArray[i][7][0],
+            classDay: classesArray[i][4],
             dateArray: classesArray[i][10]
         }
         jsonTimetable.push(timetableItem);
     }
-    console.log(jsonTimetable);
+    // console.log(classesArray[i]);
+    // console.log("teet");
     return jsonTimetable;
 }
