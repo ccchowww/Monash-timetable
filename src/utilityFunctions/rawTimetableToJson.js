@@ -1,5 +1,5 @@
 export const toJson = (rawText) => {
-    console.log("1st"+ rawText);
+    // console.log("1st"+ rawText);
     let stringsOfClasses = rawText.trim().split("\n");
     let classesArray = [];
     // Remove table headers line
@@ -8,7 +8,7 @@ export const toJson = (rawText) => {
         classesArray.push(line) :
         null
     ));
-    console.log("result first step: " + classesArray);
+    // console.log("result first step: " + classesArray);
     // Loop through the massive string
     // Split by Tab to separate into usable items in an array
     for (let i = 0; i < classesArray.length; i++) {
@@ -26,6 +26,9 @@ export const toJson = (rawText) => {
                 
             } else {
                 classesArray[i][k] = classesArray[i][k].split(', ');
+                for (let j = 0; j < classesArray[i][k].length; j++) {
+                    classesArray[i][k][j] = classesArray[i][k][j].split('-');
+                }
             }
         }
         // attempt convert class code thingy to array
@@ -37,7 +40,9 @@ export const toJson = (rawText) => {
             }
         }
     }
-    console.log("result 2nd step: " + classesArray);
+
+    // console.log("result 2nd step: " + classesArray);
+    // console.log(classesArray);
     // Convert to useful json data
     let jsonTimetable = [];
     for (let i = 0; i < classesArray.length; i++) {
@@ -49,10 +54,12 @@ export const toJson = (rawText) => {
             classroomType: classesArray[i][7][1].toLowerCase(),
             classroomCode: classesArray[i][7][2],
             campus: classesArray[i][7][0],
+            classDay: classesArray[i][4],
             dateArray: classesArray[i][10]
         }
         jsonTimetable.push(timetableItem);
     }
-
+    // console.log(classesArray[i]);
+    // console.log("teet");
     return jsonTimetable;
 }
