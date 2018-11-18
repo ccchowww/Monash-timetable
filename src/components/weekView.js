@@ -4,7 +4,7 @@ import moment from 'moment';
 
 class WeekView extends Component {
 	render() {
-		const today = "12/12/2018"
+		const today = "12/11/2018"
 		const rawJson = this.props.ttData;
 		const sortedJson = rawJson.sort((a,b) => {
 			a = moment(a.timeStart, 'HH:mm');
@@ -14,24 +14,6 @@ class WeekView extends Component {
 
 		const allDays = []
 		console.log(sortedJson)
-		// console.log(moment().format('D/M'))
-
-		//these loops will add years accordingly
-		// for (var i = 0; i < sortedJson.length; i++) {
-		// 	for (var j = 0; j < sortedJson[i].dateArray.length; j++) {
-		// 		for (var k = 0; k < sortedJson[i].dateArray[j].length; k++) {
-		// 			let thisYear = moment().year();
-		// 			let nextYear = moment().add(1, 'years').format('YYYY')					
-		// 			if (moment(sortedJson[i].dateArray[j][k], 'D/M').isBefore(moment())) {
-		// 				// console.log(sortedJson[i].dateArray[j][k])
-		// 				sortedJson[i].dateArray[j][k] = sortedJson[i].dateArray[j][k] + '/' + nextYear;
-		// 			}else{
-		// 				sortedJson[i].dateArray[j][k] = sortedJson[i].dateArray[j][k] + '/' + thisYear;
-		// 			}
-		// 			console.log(sortedJson[i].dateArray[j][k])
-		// 		}
-		// 	}
-		// }
 
 		for (var classType = 0; classType < sortedJson.length; classType++) {
 			let dateArray = sortedJson[classType].dateArray
@@ -67,11 +49,14 @@ class WeekView extends Component {
 				}
 
 				for (var i = 0; i < rangeArr.length; i++) {
-					// console.log(moment(rangeArr[i], 'D/M/YYY').format('ddd'))
+					if(moment(rangeArr[i], 'D/M/YYY').weekday() == 5 ||  moment(rangeArr[i], 'D/M/YYY').weekday() == 6){
+						rangeArr.splice(i , 1 )
+					}
+					console.log(moment(rangeArr[i], 'D/M/YYY').format('ddd'))
 				}
 
-					// console.log(nextDay)
-					// console.log(moment(nextDay).format('ddd'))
+				// console.log(nextDay)
+				// console.log(moment(nextDay).format('ddd'))
 
 				dateArray[x] = rangeArr //replacing original array with an array with all the days of the class
 				allDays.push(dateArray[x]) // push into another array to get all the days of the semester
@@ -84,30 +69,43 @@ class WeekView extends Component {
 			b = moment(b, 'D/M/YYYY');
 			return a - b;
 		});
-		console.log(allUniqDays)
+		// console.log(allUniqDays)
+		const todayClass = [];
 
+		for (var i = 0; i < sortedJson.length; i++) {
+			for (let dateRange = 0; dateRange < sortedJson[i].dateArray.length; dateRange++) {
+				// console.log(sortedJson[i].dateArray[dateRange])
+				// console.log(sortedJson[i].dateArray[dateRange].includes(today))
+				if (sortedJson[i].dateArray[dateRange].includes(today)) {					
+					todayClass.push(sortedJson[i])
+				}
+			}
+		}
+
+		// console.log(todayClass)
+		// console.log(sortedJson)
 		const allData = sortedJson
 			.map( ({ unitName, unitSeries, timeStart, duration, classroomType, dateArray }) => {
+				console.log(dateArray)
 
-				for (let dateRange = 0; dateRange < dateArray.length; dateRange++) {
-					console.log(dateArray[dateRange])
-					if( dateArray[dateRange].includes(today) ){
-						return (
-							<div className="individual-card">
-								<p> Unit Name :  {unitName} </p>
-								<p> Unit Series : {unitSeries} </p>
-								<p> Time Start : {timeStart} </p>
-								<p> Duration : {duration} </p>
-								<p> End Time : <Moment add={{ hours : duration}} parse="HH:mm" format="HH:mm">{timeStart}</Moment> </p>
-								<p> Classroom Type : {classroomType} </p>
-							</div>
-						) 
-					}else{
-						return(
-							<p> none </p>
-						)
-					}
-				}
+
+					// if( dateArray[dateRange].includes(today) ){
+					// 	// console.log(dateArray[dateRange].includes(today)) 
+					// 	return (
+					// 		<div className="individual-card">
+					// 			<p> Unit Name :  {unitName} </p>
+					// 			<p> Unit Series : {unitSeries} </p>
+					// 			<p> Time Start : {timeStart} </p>
+					// 			<p> Duration : {duration} </p>
+					// 			<p> End Time : <Moment add={{ hours : duration}} parse="HH:mm" format="HH:mm">{timeStart}</Moment> </p>
+					// 			<p> Classroom Type : {classroomType} </p>
+					// 		</div>
+					// 	) 
+					// }else{
+					// 	return(
+					// 		<p> none </p>
+					// 	)
+					// }
 			})
 		// console.log(this.props.ttData)
 		return (

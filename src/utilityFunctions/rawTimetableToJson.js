@@ -40,6 +40,7 @@ export const toJson = (rawText) => {
             }
         }
     }
+
     // console.log("result 2nd step: " + classesArray);
     // console.log(classesArray);
     // Convert to useful json data
