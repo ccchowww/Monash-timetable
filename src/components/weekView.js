@@ -4,7 +4,8 @@ import moment from 'moment';
 
 class WeekView extends Component {
 	render() {
-		const today = "12/11/2018"
+		// const today = moment().format('D/M/YYYY') //uncomment this to use today 
+		const today = '19/11/2018' //comment this to stop using static date
 		const rawJson = this.props.ttData;
 		const sortedJson = rawJson.sort((a,b) => {
 			a = moment(a.timeStart, 'HH:mm');
@@ -17,6 +18,7 @@ class WeekView extends Component {
 
 		for (var classType = 0; classType < sortedJson.length; classType++) {
 			let dateArray = sortedJson[classType].dateArray
+			let classDay = sortedJson[classType].classDay
 			for (var x = 0; x < dateArray.length; x++) {
 				let rangeArr = [];
 				let thisYear = moment().year();
@@ -40,23 +42,12 @@ class WeekView extends Component {
 				for (let a = 0; a < diff+1 ; i++) { // loop with diff + 1 to get last day in as well
 					let nextDay = moment(firstDay, 'D/M/YYYY').add(counter, 'day').format('D/M/YYYY')
 
-					// console.log(moment(nextDay, 'D/M/YYYY').weekday())	
-					if (moment(nextDay, 'D/M/YYYY').weekday() != 5 || moment(nextDay, 'D/M/YYYY').weekday() != 6) {
+					if (moment(nextDay, 'D/M/YYYY').format('ddd') == classDay) { //only pushing the days the classes are on into the array
 						rangeArr.push(nextDay)
 					}
 					counter += 1;
 					a += 1;
 				}
-
-				for (var i = 0; i < rangeArr.length; i++) {
-					if(moment(rangeArr[i], 'D/M/YYY').weekday() == 5 ||  moment(rangeArr[i], 'D/M/YYY').weekday() == 6){
-						rangeArr.splice(i , 1 )
-					}
-					console.log(moment(rangeArr[i], 'D/M/YYY').format('ddd'))
-				}
-
-				// console.log(nextDay)
-				// console.log(moment(nextDay).format('ddd'))
 
 				dateArray[x] = rangeArr //replacing original array with an array with all the days of the class
 				allDays.push(dateArray[x]) // push into another array to get all the days of the semester
@@ -69,45 +60,35 @@ class WeekView extends Component {
 			b = moment(b, 'D/M/YYYY');
 			return a - b;
 		});
-		// console.log(allUniqDays)
+		
 		const todayClass = [];
 
 		for (var i = 0; i < sortedJson.length; i++) {
 			for (let dateRange = 0; dateRange < sortedJson[i].dateArray.length; dateRange++) {
-				// console.log(sortedJson[i].dateArray[dateRange])
-				// console.log(sortedJson[i].dateArray[dateRange].includes(today))
+
 				if (sortedJson[i].dateArray[dateRange].includes(today)) {					
 					todayClass.push(sortedJson[i])
 				}
 			}
 		}
 
-		// console.log(todayClass)
-		// console.log(sortedJson)
 		const allData = sortedJson
 			.map( ({ unitName, unitSeries, timeStart, duration, classroomType, dateArray }) => {
-				console.log(dateArray)
-
-
-					// if( dateArray[dateRange].includes(today) ){
-					// 	// console.log(dateArray[dateRange].includes(today)) 
-					// 	return (
-					// 		<div className="individual-card">
-					// 			<p> Unit Name :  {unitName} </p>
-					// 			<p> Unit Series : {unitSeries} </p>
-					// 			<p> Time Start : {timeStart} </p>
-					// 			<p> Duration : {duration} </p>
-					// 			<p> End Time : <Moment add={{ hours : duration}} parse="HH:mm" format="HH:mm">{timeStart}</Moment> </p>
-					// 			<p> Classroom Type : {classroomType} </p>
-					// 		</div>
-					// 	) 
-					// }else{
-					// 	return(
-					// 		<p> none </p>
-					// 	)
-					// }
+				for (let dateRange = 0; dateRange < dateArray.length; dateRange++) {
+					if( dateArray[dateRange].includes(today) ){
+						return (
+							<div className="individual-card">
+								<p> Unit Name :  {unitName} </p>
+								<p> Unit Series : {unitSeries} </p>
+								<p> Time Start : {timeStart} </p>
+								<p> Duration : {duration} </p>
+								<p> End Time : <Moment add={{ hours : duration}} parse="HH:mm" format="HH:mm">{timeStart}</Moment> </p>
+								<p> Classroom Type : {classroomType} </p>
+							</div>
+						) 
+					}
+				}
 			})
-		// console.log(this.props.ttData)
 		return (
 			<div>
 				<p> {today} </p>

@@ -34,7 +34,6 @@ class FileUpload extends Component {
 
     jsonTimetable = () => {
         const jsonTimetable = toJson(this.state.uploadedFileText);
-
         this.setState({
             jsonTimetable: jsonTimetable
         })
@@ -113,8 +112,9 @@ class FileUpload extends Component {
 
         // destructuring
         const { unitName, dateArray } = this.state.jsonTimetable;
-        console.log(unitName);
-        console.log(dateArray);
+        // console.log(unitName);
+        // console.log(dateArray);
+        // console.log(this.state.jsonTimetable)
         return (
             <div>
                 <WeekView ttData={this.state.jsonTimetable}/>
