@@ -4,8 +4,8 @@ import moment from 'moment';
 
 class WeekView extends Component {
 	render() {
-		// const today = moment().format('D/M/YYYY') //uncomment this to use today 
-		const today = '19/11/2018' //comment this to stop using static date
+		const today = moment().format('D/M/YYYY') //uncomment this to use today 
+		// const today = '19/11/2018' //comment this to stop using static date
 		const rawJson = this.props.ttData;
 		const sortedJson = rawJson.sort((a,b) => {
 			a = moment(a.timeStart, 'HH:mm');
@@ -63,7 +63,7 @@ class WeekView extends Component {
 		
 		const todayClass = [];
 
-		for (var i = 0; i < sortedJson.length; i++) {
+		for (let i = 0; i < sortedJson.length; i++) {
 			for (let dateRange = 0; dateRange < sortedJson[i].dateArray.length; dateRange++) {
 
 				if (sortedJson[i].dateArray[dateRange].includes(today)) {					
