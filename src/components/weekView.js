@@ -73,17 +73,17 @@ class WeekView extends Component {
 		}
 
 		const allData = sortedJson
-			.map( ({ unitName, unitSeries, timeStart, duration, classroomType, dateArray }) => {
+			.map( ({ unitName, unitSeries, timeStart, duration, classroomCode, dateArray }) => {
 				for (let dateRange = 0; dateRange < dateArray.length; dateRange++) {
 					if( dateArray[dateRange].includes(today) ){
 						return (
 							<div className="individual-card">
 								<p> Unit Name :  {unitName} </p>
-								<p> Unit Series : {unitSeries} </p>
-								<p> Time Start : {timeStart} </p>
-								<p> Duration : {duration} </p>
+								{/* <p> Unit Series : {unitSeries} </p> */}
+								<h4> Time Start : {timeStart} </h4>
+								{/* <p> Duration : {duration} </p> */}
 								<p> End Time : <Moment add={{ hours : duration}} parse="HH:mm" format="HH:mm">{timeStart}</Moment> </p>
-								<p> Classroom Type : {classroomType} </p>
+								<h4> Classroom Code : {classroomCode} </h4>
 							</div>
 						) 
 					}
