@@ -52,7 +52,7 @@ export const toJson = (rawText) => {
             timeStart: classesArray[i][5],
             duration: /[0-9]{1}/.exec(classesArray[i][9])[0],
             classroomType: classesArray[i][7][1].toLowerCase(),
-            classroomCode: classesArray[i][7][2],
+            classroomCode: classesArray[i][7][classesArray[i][7].length - 1],
             campus: classesArray[i][7][0],
             classDay: classesArray[i][4],
             dateArray: classesArray[i][10]

@@ -117,7 +117,7 @@ class FileUpload extends Component {
         // console.log(this.state.jsonTimetable)
         return (
             <div>
-                <WeekView ttData={this.state.jsonTimetable}/>
+                <WeekView ttData={this.state.jsonTimetable} startTimeClassToday={this.getTimeStarts}/>
                 <input
                     type="file"
                     onChange={this.onUpload}

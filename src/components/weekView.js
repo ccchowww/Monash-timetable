@@ -3,9 +3,20 @@ import Moment from 'react-moment';
 import moment from 'moment';
 
 class WeekView extends Component {
+	state = {
+		classStartTimes: ["tits"]
+	}
+
+	addStartTime = (classStart) => {
+		this.setState( prevState => ({
+            classStartTimes: [...prevState.classStartTimes, classStart]
+        }));
+	}
+
 	render() {
 		const today = moment().format('D/M/YYYY') //uncomment this to use today 
 		// const today = '19/11/2018' //comment this to stop using static date
+		// console.log(this.props.ttData);
 		const rawJson = this.props.ttData;
 		const sortedJson = rawJson.sort((a,b) => {
 			a = moment(a.timeStart, 'HH:mm');
@@ -14,7 +25,7 @@ class WeekView extends Component {
 		});
 
 		const allDays = []
-		console.log(sortedJson)
+		// console.log(sortedJson)
 
 		for (var classType = 0; classType < sortedJson.length; classType++) {
 			let dateArray = sortedJson[classType].dateArray
@@ -73,7 +84,7 @@ class WeekView extends Component {
 		}
 
 		const allData = sortedJson
-			.map( ({ unitName, unitSeries, timeStart, duration, classroomCode, dateArray }) => {
+			.map( ({ unitName, unitSeries, timeStart, duration, classroomCode, classroomType, dateArray }) => {
 				for (let dateRange = 0; dateRange < dateArray.length; dateRange++) {
 					if( dateArray[dateRange].includes(today) ){
 						return (
@@ -84,11 +95,13 @@ class WeekView extends Component {
 								{/* <p> Duration : {duration} </p> */}
 								<p> End Time : <Moment add={{ hours : duration}} parse="HH:mm" format="HH:mm">{timeStart}</Moment> </p>
 								<h4> Classroom Code : {classroomCode} </h4>
+								<p> Classroom Type : {classroomType} </p>
 							</div>
 						) 
 					}
 				}
-			})
+			});
+		// console.log(allData)
 		return (
 			<div>
 				<p> {today} </p>
