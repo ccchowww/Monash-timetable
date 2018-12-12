@@ -35,7 +35,7 @@ class WeekView extends Component {
 	render() {
 		return (
 			<div>
-				{
+				{	// Only render when state has class data, otherwise return "tits".
 					this.state.classesToday !== "initial" ?
 						this.state.classesToday.map( ({ unitName, timeStart, duration, classroomCode, classroomType }) => {
 							return (
